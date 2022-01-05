@@ -35,8 +35,8 @@
     <script>
         function setUpNotifications()
         {
-            var myClientApp = new window.purecloud.apps.ClientApp();
-            var notificationsApi = new myClientApp.NotificationsApi()
+            var platformClient = require( 'purecloud-platform-client-v2/dist/node/purecloud-platform-client-v2.js' )
+            var notificationsApi = new platformClient.NotificationsApi()
 
             notificationsApi.postNotificationsChannels()
             .then(( channel ) => {
