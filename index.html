@@ -1,6 +1,8 @@
 
 <html><head><title>Manual Interaction</title>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
+
   	<style>
 	button {
 		background:    #cc0000;
@@ -31,6 +33,20 @@
             </div>
 
     <script>
+        function setUpNotifications()
+        {
+            var myClientApp = new window.purecloud.apps.ClientApp();
+            var notificationsApi = new platformClient.NotificationsApi()
+
+            notificationsApi.postNotificationsChannels()
+            .then(( channel ) => {
+                console.log( 'channel: ', channel )
+                console.log(channel.body.connectUri )
+            })
+            .catch(( err ) => {
+                console.log( err )
+            })
+        }
 
         function getObjects(obj, key, val) {
             var objects = [];
@@ -168,10 +184,14 @@
 			
 	}
     
-    
+    function processEvent( event )
+    {
+        console.log( JSON.stringify(event))
+    }
+
     var token = getParameterByName("access_token"); 
     document.getElementById("token").innerHTML= token;
-
+    var userData = undefined
     if(window.location.hash) {
         console.log(location.hash);
         $.ajax({
@@ -182,7 +202,8 @@
                 document.getElementById("welcome").innerHTML= "Welcome " + data.name;
                 document.getElementById("userID").innerHTML= data.id;
                 document.getElementById("email").innerHTML= data.username;
-
+                userData = data
+                setUpNotifications()
                 $.ajax({
                     url: "https://api.mypurecloud.com.au/api/v2/users/"+data.id+"/queues?pageSize=100&pageNumber=1",
                     type: "GET",
