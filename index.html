@@ -145,7 +145,10 @@
                 <div class="tester-note">[Note:] This tester intentionally bypasses client-side permission checks.</div>
             </div>
         </section>
-
+        <section class="manual-exmaple">
+            <h2>Hello</h2>
+            <label id="helloId"></label>
+        </section>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 let platformClient = window.require('platformClient');
@@ -297,7 +300,15 @@
                             setErrorState('Failed to locate user in Genesys Cloud');
                         }
                     });
-
+                
+                function getMe( client )
+                {
+                    client.getUsersMe()
+                    .then(( data ) => {
+                        console.log( JSON.stringify( data))
+                        document.getElementById("helloId").innerHTML = data.id
+                    })
+                }
                 // -- Utility Functions
 
                 function setHidden(el, hidden) {
