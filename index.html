@@ -36,7 +36,7 @@
         function setUpNotifications()
         {
             var myClientApp = new window.purecloud.apps.ClientApp();
-            var notificationsApi = new platformClient.NotificationsApi()
+            var notificationsApi = new myClientApp.NotificationsApi()
 
             notificationsApi.postNotificationsChannels()
             .then(( channel ) => {
