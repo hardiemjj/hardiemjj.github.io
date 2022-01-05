@@ -2,7 +2,7 @@
 <html><head><title>Manual Interaction</title>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://sdk-cdn.mypurecloud.com/client-apps/2.3.0/purecloud-client-app-sdk-70ec0c8b.min.js"></script>
-
+  
   	<style>
 	button {
 		background:    #cc0000;
@@ -35,16 +35,20 @@
     <script>
         function setUpNotifications()
         {
-            var platformClient = require( 'purecloud-platform-client-v2/dist/node/purecloud-platform-client-v2.js' )
-            var notificationsApi = new platformClient.NotificationsApi()
-
-            notificationsApi.postNotificationsChannels()
-            .then(( channel ) => {
-                console.log( 'channel xxxxxxx: ', channel )
-                console.log(channel.body.connectUri )
-            })
-            .catch(( err ) => {
-                console.log( err )
+            var url = 'https://api.mypurecloud.com.au/api/v2/notifications/channels';
+            var targetToken = document.getElementById("token").innerHTML;
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({}),
+                beforeSend: function(xhr){xhr.setRequestHeader("Authorization", "bearer " + targetToken);},
+                success: function(channel) 
+                {
+                    console.log( 'channel xxxxxxx: ', channel )
+                    console.log(channel.body.connectUri )
+                }
             })
         }
 
