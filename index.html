@@ -305,7 +305,7 @@
                 {
                     client.getUsersMe()
                     .then(( data ) => {
-                        console.log( JSON.stringify( data))
+                        console.log( 'getUsersMe mike: ' + JSON.stringify( data))
                         document.getElementById("helloId").innerHTML = data.id
                     })
                 }
