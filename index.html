@@ -39,7 +39,7 @@
             console.log( 'event: ' + JSON.stringify(event))
         }
 
-        function setUpNotifications()
+        function setUpNotifications( agentId )
         {
             var url = 'https://api.mypurecloud.com.au/api/v2/notifications/channels';
             var targetToken = document.getElementById("token").innerHTML;
@@ -57,9 +57,25 @@
                
                     var webSocket = new WebSocket( channel.connectUri) 
                     webSocket.onmessage = handleNotification
-                    webSocket.on( 'message', function message( data ){
-                        console.log( 'on message: ' + JSON.stringify( data ))
+                    
+                    var body = [
+                        { 'id' : 'v2.users.' + agentId + '.conversations.calls'}
+                    ]
+                    var url = 'https://api.mypurecloud.com.au/api/v2/notifications/channels/' + channel.id + '/subscriptions';
+                    var targetToken = document.getElementById("token").innerHTML;
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(body),
+                        beforeSend: function(xhr){xhr.setRequestHeader("Authorization", "bearer " + targetToken);},
+                        success: function(subRes) 
+                        {
+                            console.log( 'subRes: ' + JSON.stringify)subRes
+                        }
                     })
+
                 }
             })
         }
@@ -219,7 +235,7 @@
                 document.getElementById("userID").innerHTML= data.id;
                 document.getElementById("email").innerHTML= data.username;
                 userData = data
-                setUpNotifications()
+                setUpNotifications( data.id )
                 $.ajax({
                     url: "https://api.mypurecloud.com.au/api/v2/users/"+data.id+"/queues?pageSize=100&pageNumber=1",
                     type: "GET",
