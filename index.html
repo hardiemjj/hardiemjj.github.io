@@ -58,7 +58,7 @@
                     var webSocket = new WebSocket( channel.connectUri) 
                     webSocket.on( 'message', function message( data )
                     {
-                        console.log( data )
+                        console.log( 'event message:' + JSON.stringify(data) )
                     }) 
                 }
             })
