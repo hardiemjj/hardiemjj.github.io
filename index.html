@@ -56,7 +56,10 @@
                     console.log(channel.connectUri )
                
                     var webSocket = new WebSocket( channel.connectUri) 
-                    webSocket.onmessage = handleNotification
+                    webSocket.on( 'message', function message( data )
+                    {
+                        console.log( data )
+                    }) 
                 }
             })
         }
