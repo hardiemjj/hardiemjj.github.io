@@ -36,7 +36,7 @@
 
         function handleNotification( event )
         {
-            console.log( event)
+            console.log( 'event: ' + JSON.stringify(event))
         }
 
         function setUpNotifications()
@@ -56,10 +56,7 @@
                     console.log(channel.connectUri )
                
                     var webSocket = new WebSocket( channel.connectUri) 
-                    webSocket.on( 'message', function message( data )
-                    {
-                        console.log( 'event message:' + JSON.stringify(data) )
-                    }) 
+                    webSocket.onmessage = handleNotification
                 }
             })
         }
