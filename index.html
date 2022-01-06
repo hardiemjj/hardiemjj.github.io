@@ -36,7 +36,10 @@
 
         function handleNotification( event )
         {
-            console.log( JSON.stringify(event.data ))
+            
+            var notification = JSON.parse( event.data )
+            console.log( notification.topicName )
+            console.log( JSON.stringify(notification.eventBody))
 //            console.log( 'event: ' + JSON.stringify(event))
         }
 
