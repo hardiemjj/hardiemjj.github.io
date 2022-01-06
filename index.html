@@ -33,6 +33,12 @@
             </div>
             <div>Hello</div>
     <script>
+
+        function handleNotification( event )
+        {
+            console.log( event)
+        }
+
         function setUpNotifications()
         {
             var url = 'https://api.mypurecloud.com.au/api/v2/notifications/channels';
@@ -49,30 +55,8 @@
                     console.log( 'channel xxxxxxx: ', channel )
                     console.log(channel.connectUri )
                
-                    url = 'https://api.mypurecloud.com.au/api/v2/notifications/channels/' + channel.connectUri + '/subscriptions';
-                    var body = 
-                        [
-                            { id: 'v2.users.' + document.getElementById("userID").innerHTML + '.conversations.calls' }
-                        ]
-                    ;
-                    console.log( url )
-                    console.log( body)
-
-
-                    $.ajax({
-                        url: url,
-                        dataType: 'json',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify({}),
-                        beforeSend: function(xhr){xhr.setRequestHeader("Authorization", "bearer " + targetToken);},
-                        success: function(sub) 
-                        {
-                            console.log( sub )
-                            
-                            
-                        }
-                    })
+                    var webSocket = new WebSocket( channel.connectUri) 
+                    webSocket.onmessage = handleNotification
                 }
             })
         }
