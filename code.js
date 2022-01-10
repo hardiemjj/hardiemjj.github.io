@@ -16,7 +16,7 @@ function getCallData()
         {
         
             console.log( 'convs: '  + JSON.stringify( res ))
-            const entities = res.body.entities
+            const entities = res.entities
             if(  entities.length === 0 )
             {
                 return
