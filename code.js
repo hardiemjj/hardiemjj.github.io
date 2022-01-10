@@ -1,5 +1,5 @@
-
-var platformClient = require( 'purecloud-platform-client-v2/dist/node/purecloud-platform-client-v2.js' )
+<script>
+const platformClient = require('platformClient');
 const client = platformClient.ApiClient.instance;
 client.setEnvironment(platformClient.PureCloudRegionHosts.ap_southeast_2)
 
@@ -64,3 +64,6 @@ function getCallData()
         console.log( 'get conv err: ', err )
     })
 }
+
+
+</script>
